@@ -1,4 +1,10 @@
+.g8/
 .bsp/
 .idea/
 project/target/
 target/
+sbt-dist/
+sbt
+sbt.bat
+scripts/
+project/scaffold.sbt

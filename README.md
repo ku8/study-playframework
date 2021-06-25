@@ -1,115 +1,37 @@
-# PlayFrameworkの勉強
+# Play Hello World Web Tutorial for Scala
 
-## PlayFrameworkとは
-Scala or JavaのWebアプリケーションフレームワーク  
-https://www.playframework.com/
+To follow the steps in this tutorial, you will need the correct version of Java and sbt. The template requires:
 
-## 実行方法
-1. ターミナルで下記コマンドを実行する
-```
-sbt run
-```
-2. http://localhost:9000/　に接続する
+* Java Software Developer's Kit (SE) 1.8 or higher
+* sbt 1.3.4 or higher. Note: if you downloaded this project as a zip file from <https://developer.lightbend.com>, the file includes an sbt distribution for your convenience.
 
-## 学んだこと
-- 下記コマンドを実行すれば、雛形を作成してくれる
-```
-sbt new playframework/play-scala-seed.g8
+To check your Java version, enter the following in a command window:
+
+```bash
+java -version
 ```
 
-### ディレクトリ?構成
-```
-app                      → Application sources
- └ assets                → Compiled asset sources
-    └ stylesheets        → Typically LESS CSS sources
-    └ javascripts        → Typically CoffeeScript sources
- └ controllers           → Application controllers
- └ models                → Application business layer
- └ views                 → Templates
-build.sbt                → Application build script
-conf                     → Configurations files and other non-compiled resources (on classpath)
- └ application.conf      → Main configuration file
- └ routes                → Routes definition
-dist                     → Arbitrary files to be included in your projects distribution
-public                   → Public assets
- └ stylesheets           → CSS files
- └ javascripts           → Javascript files
- └ images                → Image files
-project                  → sbt configuration files
- └ build.properties      → Marker for sbt project
- └ plugins.sbt           → sbt plugins including the declaration for Play itself
-lib                      → Unmanaged libraries dependencies
-logs                     → Logs folder
- └ application.log       → Default log file
-target                   → Generated stuff
- └ resolution-cache      → Info about dependencies
- └ scala-2.13
-    └ api                → Generated API docs
-    └ classes            → Compiled class files
-    └ routes             → Sources generated from routes
-    └ twirl              → Sources generated from templates
- └ universal             → Application packaging
- └ web                   → Compiled web assets
-test                     → source folder for unit or functional tests
-```
-#### app配下
-ソースコードが置かれるところ
+To check your sbt version, enter the following in a command window:
 
-#### public配下
-Webサーバーから直接提供される静的アセット  
-このディレクトリは、
-- CSS (stylesheets ディレクトリ)
-- JavaScript (javascripts ディレクトリ)
-- 画像 (images ディレクトリ)
-
-が置かれるディレクトリを用意し構成されている
-
-#### conf配下
-アプリケーションの設定ファイルを置く  
-ここで重要な2つのファイルがある  
-- application.conf
-  - アプリケーションのメイン構成ファイル
-    - 構成ファイルはのちに
-- routes
-  - ルーターの定義ファイル
-    
-### Introduction to Play
-https://www.playframework.com/documentation/2.8.x/HelloWorldTutorial#Introduction-to-Play  
-
-- 内部でAkka と　Akka HTTPを使用している
-  - Akkaってなんだ
-    - アクターモデル で並行処理が出来るライブラリ
-      - アクターモデル
-        - 複数の アクター(Actor) 同士が並行的にメッセージのやりとりを行うもの
-          - アクター
-            - 非同期でメッセージの送受信(スレッド、プロセス、ネットワーク間)と処理が出来て、それぞれが状態を持っているオブジェクト
-            - アクター(Actor)同士は状態を気にしない。
-    - https://qiita.com/kazhit/items/610bb7d0e1145ff8f423#akka%E3%81%A8%E3%81%AF
-  - Akka HTTP
-    - Scala/Java用のHTTPツールキット
-    
-### コードを読み解く
-app/controller/HomeController.scala は
-index.scala.html というTwirlテンプレートファイルから HTML ページを生成するメソッド
-```scala
-def index = Action {
-  Ok(views.html.index("Your new application is ready."))
-}
-```
-ブラウザからのリクエストを、メソッドに結びつけるには、conf/routes ファイルに設定をする
-routesファイル
-```
-GET     /           controllers.HomeController.index
-```
-構成は、`HTTPメソッド・パス・メソッド` の順  
-
-index.scala.htmlにある@main() は、main.scala.htmlにWelcomeという文字列と、HTMLを渡している  
-
-main.scala.html  
-```
-@(title: String)(content: Html)
-// title <- "Welcome"
-// content <- index.scala.htmlの中身(?)
+```bash
+sbt sbtVersion
 ```
 
+If you do not have the required versions, follow these links to obtain them:
 
+* [Java SE](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+* [sbt](http://www.scala-sbt.org/download.html)
+
+## Build and run the project
+
+This example Play project was created from a seed template. It includes all Play components and an Akka HTTP server. The project is also configured with filters for Cross-Site Request Forgery (CSRF) protection and security headers.
+
+To build and run the project:
+
+1. Use a command window to change into the example project directory, for example: `cd play-scala-hello-world-web`
+
+2. Build the project. Enter: `sbt run`. The project builds and starts the embedded HTTP server. Since this downloads libraries and dependencies, the amount of time required depends partly on your connection's speed.
+
+3. After the message `Server started, ...` displays, enter the following URL in a browser: <http://localhost:9000>
+
+The Play application responds: `Welcome to the Hello World Tutorial!`
